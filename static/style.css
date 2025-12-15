@@ -1,0 +1,101 @@
+/* Global Page Style */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Centered Container */
+.container, .dashboard-box {
+    width: 380px;                    /* FIXED SMALL WIDTH */
+    background: white;
+    padding: 25px;
+    margin: 80px auto;               /* PERFECT CENTERING */
+    border-radius: 12px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.15);
+}
+
+/* Headings */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+/* Buttons */
+button, input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: #4a90e2;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: 0.2s;
+}
+
+button:hover, input[type="submit"]:hover {
+    background: #357ac8;
+}
+
+/* Centered link text */
+.center {
+    text-align: center;
+}
+
+/* Links */
+a {
+    color: #4a90e2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Flash message styling */
+ul {
+    padding: 0;
+    list-style: none;
+}
+li {
+    margin: 5px 0;
+    padding: 10px;
+    background: #ffe9e9;
+    color: #a94442;
+    border-left: 5px solid #d9534f;
+    border-radius: 4px;
+}
+
+/* QR Code box */
+.qr-box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.qr-box img {
+    width: 200px;
+    border: 8px solid #eee;
+    border-radius: 10px;
+}

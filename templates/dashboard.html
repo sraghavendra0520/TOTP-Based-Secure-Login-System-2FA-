@@ -1,0 +1,39 @@
+<!-- with 2FA TOTP -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="dashboard-box">
+    <h2>Welcome, {{ username }}!</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, msg in messages %}
+          <li>{{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if totp_enabled %}
+        <p class="center">Two-factor authentication: <strong>Enabled</strong></p>
+
+        <form action="{{ url_for('disable_2fa') }}" method="post" autocomplete="off">
+            <label for="token">Enter current TOTP to disable:</label>
+            <input id="token" type="text" name="token" required>
+            <button type="submit">Disable 2FA</button>
+        </form>
+    {% else %}
+        <p class="center">Two-factor authentication: <strong>Disabled</strong></p>
+        <p class="center"><a href="{{ url_for('enable_2fa') }}">Enable 2FA (Google Authenticator)</a></p>
+    {% endif %}
+
+    <p class="center"><a href="{{ url_for('logout') }}">Logout</a></p>
+</div>
+</body>
+</html>
