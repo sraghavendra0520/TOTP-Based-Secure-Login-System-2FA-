@@ -1,101 +1,242 @@
-/* Global Page Style */
+/* ===================== GLOBAL FIX ===================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ===================== THEME ===================== */
+:root {
+    /* DARK */
+    --bg: #020617;
+    --bg-gradient: radial-gradient(circle at top, #0f172a, #020617);
+    --card: rgba(15, 23, 42, 0.85);
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --border: rgba(148, 163, 184, 0.3);
+    --primary: #60a5fa;
+}
+
+body.light {
+    /* LIGHT */
+    --bg: #f8fafc;
+    --bg-gradient: linear-gradient(180deg, #eef2ff, #f8fafc);
+    --card: #ffffff;
+    --text: #020617;
+    --muted: #64748b;
+    --border: #cbd5e1;
+    --primary: #2563eb;
+}
+
+/* ===================== BASE ===================== */
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #f5f7fa;
     margin: 0;
-    padding: 0;
+    font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text);
+    min-height: 100vh;
 }
 
-/* Centered Container */
-.container, .dashboard-box {
-    width: 380px;                    /* FIXED SMALL WIDTH */
-    background: white;
-    padding: 25px;
-    margin: 80px auto;               /* PERFECT CENTERING */
-    border-radius: 12px;
-    box-shadow: 0px 3px 15px rgba(0,0,0,0.15);
+/* ===================== TOGGLE ===================== */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25);
 }
 
-/* Headings */
+/* ===================== CARD ===================== */
+.container {
+    width: 420px;
+    max-width: 92%;
+    margin: 120px auto;
+    padding: 34px;
+    background: var(--card);
+    border-radius: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 40px 80px rgba(0,0,0,.6);
+    overflow: hidden; /* safety */
+}
+
+/* ===================== HEADING ===================== */
 h2 {
     text-align: center;
-    color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 28px;
+    font-size: 22px;
 }
 
-/* Labels */
-label {
-    font-weight: bold;
-    color: #555;
+/* ===================== FORM ===================== */
+.form-group {
+    margin-bottom: 22px;
 }
 
-/* Inputs */
-input[type="text"],
-input[type="password"],
-input[type="number"] {
+/* ===================== FLOATING INPUT ===================== */
+.input-box {
+    position: relative;
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    margin-bottom: 15px;
-    border: 1px solid #bbb;
-    border-radius: 6px;
-    font-size: 15px;
 }
 
-/* Buttons */
-button, input[type="submit"] {
+.input-box input {
     width: 100%;
-    padding: 12px;
-    background: #4a90e2;
+    padding: 20px 46px 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: all .2s ease;
+}
+
+/* label INSIDE input */
+.input-box label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 14px;
+    pointer-events: none;
+    padding: 0 6px;                 /* IMPORTANT */
+    background: var(--card);        /* IMPORTANT */
+    transition: all .2s ease;
+}
+
+/* float on focus or value */
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label {
+    top: -6px;                      /* move ABOVE border */
+    font-size: 11px;
+    color: var(--primary);
+}
+
+/* focus effect */
+.input-box input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(96,165,250,.25);
+}
+
+
+/* ===================== EYE ICON ===================== */
+.eye-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
     border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 6px;
     cursor: pointer;
-    margin-top: 8px;
-    transition: 0.2s;
+    color: var(--muted);
 }
 
-button:hover, input[type="submit"]:hover {
-    background: #357ac8;
+.eye-btn svg { display: none; }
+.eye-btn .eye-open { display: block; }
+.eye-btn.active .eye-open { display: none; }
+.eye-btn.active .eye-closed { display: block; }
+
+/* ===================== BUTTON ===================== */
+button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    background: var(--primary);
+    color: #020617;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-/* Centered link text */
+/* ===================== LINKS ===================== */
 .center {
     text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
 }
 
-/* Links */
 a {
-    color: #4a90e2;
+    color: var(--primary);
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
+/* ===================== FLASH ===================== */
+ul { padding: 0; list-style: none; }
 
-/* Flash message styling */
-ul {
-    padding: 0;
-    list-style: none;
-}
 li {
-    margin: 5px 0;
-    padding: 10px;
-    background: #ffe9e9;
-    color: #a94442;
-    border-left: 5px solid #d9534f;
-    border-radius: 4px;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
 }
 
-/* QR Code box */
-.qr-box {
+.flash-danger { background: #7f1d1d; }
+.flash-success { background: #166534; }
+.flash-info { background: #1e40af; }
+
+/* ===================== INFO TEXT ===================== */
+.info {
     text-align: center;
-    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 16px;
 }
+
+/* ===================== ACTION LIST ===================== */
+.action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+}
+
+.action-list a,
+.action-list button {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.action-list a:hover,
+.action-list button:hover {
+    background: rgba(255,255,255,.12);
+}
+
+/* ===================== QR FIX ===================== */
+.qr-box {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0;
+}
+
 .qr-box img {
-    width: 200px;
-    border: 8px solid #eee;
+    width: 220px;
+    max-width: 100%;
+    background: white;
+    padding: 14px;
+    border-radius: 16px;
+}
+
+/* ===================== SECRET TEXT ===================== */
+.secret {
+    font-size: 13px;
+    word-break: break-all;
+    background: rgba(0,0,0,.25);
+    padding: 10px;
     border-radius: 10px;
+    text-align: center;
+    margin-bottom: 18px;
 }

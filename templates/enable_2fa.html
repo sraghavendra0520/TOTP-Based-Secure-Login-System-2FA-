@@ -1,39 +1,39 @@
-<!-- with 2FA TOTP -->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>Enable 2FA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="dashboard-box">
-    <h2>Enable Two-Factor Authentication</h2>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-        {% for category, msg in messages %}
-          <li>{{ msg }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+<button class="theme-toggle" id="themeToggle">🌙</button>
+
+<div class="container">
+    <h2>Enable Two-Factor Authentication</h2>
 
     <div class="qr-box">
         <img src="{{ qr_data }}" alt="QR Code">
     </div>
 
-    <p class="center">Manual secret: <strong>{{ secret }}</strong></p>
+    <p class="info">Manual secret</p>
+    <div class="secret">{{ secret }}</div>
 
-    <form method="post" autocomplete="off">
-        <label for="token">Enter the 6-digit code from your app:</label>
-        <input id="token" type="text" name="token" placeholder="123456" required>
+    <form method="post">
+        <div class="form-group">
+            <div class="input-box">
+                <input type="text" name="token" placeholder=" " required>
+                <label>6-digit code</label>
+            </div>
+        </div>
+
         <button type="submit">Verify & Enable</button>
     </form>
 
-    <p class="center"><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+    <p class="center">
+        <a href="{{ url_for('dashboard') }}">Back</a>
+    </p>
 </div>
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
 </body>
 </html>

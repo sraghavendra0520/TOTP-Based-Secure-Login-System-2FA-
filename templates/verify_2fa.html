@@ -9,13 +9,17 @@
 </head>
 <body>
 <div class="container">
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+  
     <h2>Verify 2FA</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <ul>
         {% for category, msg in messages %}
-          <li>{{ msg }}</li>
+          <!-- <li>{{ msg }}</li> -->
+          <li class="flash-{{ category }}">{{ msg }}</li>
         {% endfor %}
         </ul>
       {% endif %}
