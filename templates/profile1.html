@@ -12,19 +12,12 @@
     <h2>My Profile</h2>
 
     <p class="info"><strong>Username:</strong> {{ user.username }}</p>
-
     <p class="info">
         <strong>2FA:</strong>
         {{ "Enabled" if user.totp_enabled else "Disabled" }}
     </p>
 
     <div class="action-list">
-        {% if user.totp_enabled %}
-            <a href="{{ url_for('disable_2fa') }}">Disable 2FA</a>
-        {% else %}
-            <a href="{{ url_for('enable_2fa') }}">Enable 2FA</a>
-        {% endif %}
-
         <a href="{{ url_for('change_password') }}">Change Password</a>
         <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
     </div>

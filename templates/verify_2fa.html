@@ -1,37 +1,51 @@
-<!-- with 2FA TOTP -->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>Verify 2FA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<button class="theme-toggle" id="themeToggle">🌙</button>
+
 <div class="container">
-    <button class="theme-toggle" id="themeToggle">🌙</button>
-    <script src="{{ url_for('static', filename='theme.js') }}"></script>
-  
     <h2>Verify 2FA</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
+    {% if messages %}
         <ul>
-        {% for category, msg in messages %}
-          <!-- <li>{{ msg }}</li> -->
-          <li class="flash-{{ category }}">{{ msg }}</li>
+        {% for c, m in messages %}
+            <li class="flash-{{ c }}">{{ m }}</li>
         {% endfor %}
         </ul>
-      {% endif %}
+    {% endif %}
     {% endwith %}
 
-    <form method="post" autocomplete="off">
-        <label for="token">Authenticator code:</label>
-        <input id="token" type="text" name="token" placeholder="123456" required>
+    <form method="post">
+
+        <div class="form-group">
+            <div class="input-box">
+                <input
+                    type="text"
+                    name="token"
+                    maxlength="6"
+                    inputmode="numeric"
+                    pattern="[0-9]{6}"
+                    placeholder=" "
+                    required
+                >
+                <label>Authenticator code</label>
+            </div>
+        </div>
+
         <button type="submit">Verify</button>
     </form>
 
-    <p class="center"><a href="{{ url_for('login') }}">Back to login</a></p>
+    <p class="center">
+        <a href="{{ url_for('login') }}">Back to login</a>
+    </p>
 </div>
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
 </body>
 </html>

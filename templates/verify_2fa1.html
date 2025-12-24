@@ -1,0 +1,41 @@
+<!-- with 2FA TOTP -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Verify 2FA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+  
+    <h2>Verify 2FA</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, msg in messages %}
+          <!-- <li>{{ msg }}</li> -->
+          <li class="flash-{{ category }}">{{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" autocomplete="off">
+      <div class="form-group">
+        <div class="input-box">
+        <label for="token"></label>
+        <input id="token" type="text" name="token" placeholder="Authenticator code" required>
+        <button type="submit">Verify</button>
+      </div>
+    </div>
+    </form>
+
+    <p class="center"><a href="{{ url_for('login') }}">Back to login</a></p>
+</div>
+</body>
+</html>

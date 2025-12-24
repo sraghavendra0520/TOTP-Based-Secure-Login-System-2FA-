@@ -202,37 +202,59 @@ def verify_2fa():
 
 
 # ---------- DISABLE 2FA ----------
-@app.route('/disable-2fa', methods=['POST'])
+@app.route('/disable-2fa', methods=['GET', 'POST'])
 def disable_2fa():
     if 'username' not in session:
         return redirect(url_for('login'))
 
-    password = request.form['password']
-    token = request.form['token']
-
+    # Fetch user once
     cursor.execute(
-        "SELECT password, totp_secret FROM users WHERE username=%s",
+        """
+        SELECT username, password, totp_enabled, totp_secret
+        FROM users
+        WHERE username=%s
+        """,
         (session['username'],)
     )
     user = cursor.fetchone()
 
-    if not check_password_hash(user['password'], password):
-        flash("Wrong password", "danger")
-        return redirect(url_for('dashboard'))
+    # Already disabled
+    if not user or not user['totp_enabled']:
+        flash("Two-factor authentication is already disabled", "info")
+        return redirect(url_for('profile'))
 
-    if not pyotp.TOTP(user['totp_secret']).verify(token):
-        flash("Invalid OTP", "danger")
-        return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        password = request.form.get('password')
+        token = request.form.get('token')
 
-    cursor.execute(
-        "UPDATE users SET totp_enabled=0, totp_secret=NULL WHERE username=%s",
-        (session['username'],)
-    )
-    conn.commit()
+        if not password or not token:
+            flash("Password and authenticator code are required", "danger")
+            return redirect(url_for('disable_2fa'))
 
-    flash("2FA disabled", "success")
-    return redirect(url_for('dashboard'))
+        if not check_password_hash(user['password'], password):
+            flash("Wrong password", "danger")
+            return redirect(url_for('disable_2fa'))
 
+        if not pyotp.TOTP(user['totp_secret']).verify(token):
+            flash("Invalid authenticator code", "danger")
+            return redirect(url_for('disable_2fa'))
+
+        # Disable 2FA
+        cursor.execute(
+            """
+            UPDATE users
+            SET totp_enabled = 0,
+                totp_secret = NULL
+            WHERE username=%s
+            """,
+            (session['username'],)
+        )
+        conn.commit()
+
+        flash("2FA disabled successfully", "success")
+        return redirect(url_for('profile'))
+
+    return render_template('disable_2fa.html', user=user)
 
 @app.route('/logout')
 def logout():

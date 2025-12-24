@@ -20,9 +20,9 @@
     </p>
 
     <div class="action-list">
-        {% if not totp_enabled %}
+        <!-- {% if not totp_enabled %}
             <a href="{{ url_for('enable_2fa') }}">Enable 2FA</a>
-        {% endif %}
+        {% endif %} -->
         <a href="{{ url_for('profile') }}">Profile</a>
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
